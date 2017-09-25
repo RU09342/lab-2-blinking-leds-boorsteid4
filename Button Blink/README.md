@@ -1,21 +1,17 @@
 # Button Blink
-Now that you have looked at blinking the LED from some built in delay, but what if we wanted to control the state of the LED by a button? You may think "Why would I need a Microcontroller to perform the job of a switch?". And that is where you come in. The bare minimum for this part of the lab is to essentially replicate a switch with your development board.
 
-# YOU NEED TO CREATE THE FOLLOWING FOLDERS
-* MSP430G2553
-* MSP430F5529
-* MSP430FR2311
-* MSP430FR5994
-* MSP430FR6989
+A button is used to toggle an LED on and off. When the user presses the button, the LED will remain high until the button is released. On some boards, buttons are mapped to specific LEDs if there are multiple buttons.
 
-## README
-Remember to replace this README with your README once you are ready to submit. I would recommend either making a copy of this file or taking a screen shot. There might be a copy of all of these README's in a folder on the top level depending on the exercise.
+## Compatability
 
-## Extra Work
-What can we do to make this a little bit more worthy of needing a microcontroller.
+This program works with all boards in this repository.
 
-### Button Based Speed Control
-Much like the UART controlled speed, what if you could cycle between speeds based on a button press? The speed could progress through a cycle of "Off-Slow-Medium-Fast" looping back when you hit the end.
+### Disabling GPIO Default Mode
 
-### Color Change
-What if upon a button press, the LED which was blinking changed. Some of the development boards contain two LEDs, so you could swap between a Red and a Green LED.
+On all boards except the G2553, the GPIO power-on default high-impedance mode must be deactivated for the program to work. This is implemented by the following line of code:
+
+<code>PM5CTL0 &= ~LOCKLPM5;</code>
+
+## Implementation
+
+An LED will turn on when the corresponding pushbutton is activated. LED1 usually maps with S1 (Button 1) and LED2 usually maps with S2 (Button 2).
