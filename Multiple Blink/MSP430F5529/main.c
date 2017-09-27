@@ -31,8 +31,8 @@ void main(void)
 
     LED1_DIR |= (LED1 + LED3 + LED4); // Set LED1 (red) to output direction on P1
     LED2_DIR |= LED2; // Set LED2 (green) to output direction on P4
-    LED1_OUT &= ~(LED1 + LED3 + LED4); // Clear LED1 (OFF)
-    LED2_OUT &= ~LED2; // Clear LED2 (OFF)
+    LED1_OUT &= ~(LED1 + LED3 + LED4); // Clear all LEDs on P1 (OFF)
+    LED2_OUT &= ~LED2; // Clear LED2 on P4 (OFF)
 
     while(1) // Infinite loop
     {
@@ -88,7 +88,7 @@ void main(void)
         // Program clock
         if(count % 750 == 0) // every 750 cycles...
             state = ns; // current state <= next state
-        count++;
+        count++; // increment count
     }
 
 
