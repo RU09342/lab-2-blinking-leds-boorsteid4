@@ -20,6 +20,6 @@ There is one Select register. It is not necessary to disable GPIO high-impedance
 
 ### MSP430FRx
 
-There are two Select registers, P1SEL0 and P1SEL1. The GPIO high-impedance mode must be disabled.
+There are two Select registers, PxSEL0 and PxSEL1. The GPIO high-impedance mode must be disabled.
 
  
