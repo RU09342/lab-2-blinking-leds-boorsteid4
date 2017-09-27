@@ -13,4 +13,6 @@ There are multiple objectives for this lab:
   <li>A LED must be mapped to and toggled by a button,</li>
   <li>An off-board LED must be controlled by the microprocessor.</li>
 </ol>
+
+I would recommend reading through the READMEs in this order.
  
