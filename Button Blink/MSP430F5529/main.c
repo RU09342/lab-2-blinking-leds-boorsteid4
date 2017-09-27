@@ -5,48 +5,51 @@
 //|                                                                                                                                                 |
 //| Author: Damon Boorstein                                                                                                                         |
 //| Date Created: 9/21/17                                                                                                                           |
-//| Last Updated: 9/23/17                                                                                                                           |
+//| Last Updated: 9/27/17                                                                                                                           |
 //|_________________________________________________________________________________________________________________________________________________|
 
 #include <msp430f5529.h>
 
-#define LED_1       BIT0    // LED_0 = 0x0001h
-#define LED_2       BIT7    // LED_1 = 0x0080h
-#define LED1_OUT    P1OUT
-#define LED1_DIR    P1DIR
-#define LED2_OUT    P4OUT
-#define LED2_DIR    P4DIR
-#define BUTTON      BIT1    // Both BUTTONs (S1 and S2) = 0x0002h
-#define BUTTON1_UP  P2IN & BUTTON
-#define BUTTON2_UP  P1IN & BUTTON
+#define LED1        BIT0 // LED_0 is defined as 0x0001h
+#define LED2        BIT7 // LED_1 is defined as 0x0080h
+#define LED1_SEL    P1SEL // LED1_SEL is defined as P1SEL
+#define LED2_SEL    P4SEL // LED1_SEL is defined as P4SEL
+#define LED1_OUT    P1OUT // LED1_OUT is defined as P1OUT
+#define LED1_DIR    P1DIR // LED1_DIR is defined as P1DIR
+#define LED2_OUT    P4OUT // LED2_OUT is defined as P4OUT
+#define LED2_DIR    P4DIR // LED2_OUT is defined as P4OUT
+#define BUTTON      BIT1  // BUTTON is defined as 0x0002h
+#define BUTTON1_UP  P2IN & BUTTON // BUTTON1_UP is defined as P2IN & BUTTON
+#define BUTTON2_UP  P1IN & BUTTON // BUTTON2_UP is defined as P1IN & BUTTON
 
 void main(void)
 {
     WDTCTL = WDTPW + WDTHOLD; // Stop watchdog timer
-    // DO NOT PM5CTL0 &= ~LOCKLPM5 ON MSP430F5529
 
-    LED1_DIR |= LED_1; // Set P1.0 to output direction
-    LED2_DIR |= LED_2; // Set P4.7 to output direction
-    P1DIR &= ~BUTTON; // Clear P1.1 to input direction
-    P2DIR &= ~BUTTON; // Clear P2.1 to input direction
-    LED1_OUT &= ~LED_1; // Clear the LED (LED_1 OFF)
-    LED2_OUT &= ~LED_2; // Clear the LED (LED_2 OFF)
-    P1REN |= BUTTON; // Enables a pull-resistor on the button pin
-    P2REN |= BUTTON;
-    P1OUT |= BUTTON; // Writes a "1" to the port pin, telling the resistor to pull up
-    P2OUT |= BUTTON;
+    LED1_SEL &= ~LED1; // Select I/O function for P1.0 by masking with LED1 and clearing LED_SEL
+    LED2_SEL &= ~LED2; // Select I/O function for P4.7 by masking with LED2 and clearing LED_SEL
+    LED1_DIR |= LED1; // Change P1.0 to an output by masking with LED1 and setting LED1_DIR
+    LED2_DIR |= LED2; // Change P4.7 to an output by masking with LED2 and setting LED2_DIR
+    P1DIR &= ~BUTTON; // Change P2.1 to an input by masking with BUTTON and clearing P1DIR
+    P4DIR &= ~BUTTON; // Change P1.1 to an input by masking with BUTTON and clearing P4DIR
+    LED1_OUT &= ~LED1; // Clear P1.0 (turn LED1 off) by masking with LED1 and clearing LED1_OUT
+    LED2_OUT &= ~LED2; // Clear P4.7 (turn LED2 off) by masking with LED2 and clearing LED2_OUT
+    P1REN |= BUTTON; // Enable a pull-resistor on P1.1 by masking with BUTTON and setting P1REN
+    P2REN |= BUTTON; // Enable a pull-resistor on P2.1 by masking with BUTTON and setting P2REN
+    P1OUT |= BUTTON; // Tell the resistor to pull up by masking with BUTTON and setting P1OUT
+    P2OUT |= BUTTON; // Tell the resistor to pull up by masking with BUTTON and setting P2OUT
 
-    while(1)
+    while(1) // This initiates an "infinite" loop for polling
     {
-        if(BUTTON1_UP)
-            LED1_OUT &= ~LED_1; // LED_1 OFF
-        else if(~BUTTON1_UP)
-            LED1_OUT |= LED_1; // LED_1 ON
+        if(BUTTON1_UP) // If BUTTON1 is up...
+            LED1_OUT &= ~LED1; // turn LED1 OFF
+        else if(~BUTTON1_UP) // Else, if BUTTON1 is down...
+            LED1_OUT |= LED1; // turn LED1 ON
 
-        if(BUTTON2_UP)
-            LED2_OUT &= ~LED_2; // LED_2 OFF
-        else if(~BUTTON2_UP)
-            LED2_OUT |= LED_2; // LED_2 ON
+        if(BUTTON2_UP) // If BUTTON2 is up...
+            LED2_OUT &= ~LED2; // turn LED2 OFF.
+        else if(~BUTTON2_UP) // Else, if BUTTON2 is down...
+            LED2_OUT |= LED2; // turn LED2 ON.
     }
 
 }
