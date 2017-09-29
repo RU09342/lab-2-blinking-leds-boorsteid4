@@ -14,7 +14,7 @@ We're not done, yet. Now, the button pressed must be synchronized with an LED. T
 
 A second-order design problem with pushbuttons is bouncing. Pushbuttons are mechanical switches that use a flimsy metal contact to complete a circuit whenever pressed. This flimsy sheet has a habit of reverberating, causing unintended shorts. On an oscilloscope, this can be seen in the form of hundreds of square voltage spikes before returning to a steady state.
 
-To work around this, we can account for these spikes by taking a longer sample of button presses. Whereas the implementation polls for one button press, we can poll for 1000 button "presses" and add them to a float variable <code>sample</code>. If this float is close to 1000, we can assume the user has just pressed the button. Then the rest code will run as intended. This was implemented on the MSP4302311.
+To work around this, we can account for these spikes by taking a longer sample of button presses. Whereas the implementation polls for one button press, we can poll for 1000 button "presses" and add them to a float variable <code>sample</code>. If this float is close to 1000, we can assume the user has just pressed the button. Then the rest code will run as intended. This was implemented on the MSP430FR2311.
 
 ### EXTRA WORK: Variable Frequency LED
 
