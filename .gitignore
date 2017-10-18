@@ -1,0 +1,16 @@
+## Code Composer Junk Files from Eclipse
+*.cproject
+*.project
+*.cmd
+*.ccsproject
+*.launch
+*.prefs
+*makefile
+*.map
+*.out
+*.xml
+*.d
+*.obj
+*.mk
+*.ccxml
+*.txt
